@@ -38,6 +38,7 @@ main{max-width:1100px;margin:-14px auto 40px;padding:0 16px}.cards{display:grid;
         </p>
     </div>
 </div>
+  <div id="app-container" style="display: none;">
 <header><div class="wrap"><h1>Meu Controle Financeiro</h1><p>Organize suas entradas, despesas e saldo em um só lugar.</p></div></header>
 <main>
   <section class="cards">
@@ -132,6 +133,72 @@ $("exportBtn").addEventListener("click",()=>{
   a.href=url;a.download="meu-controle-financeiro.csv";a.click();URL.revokeObjectURL(url);
 });
 updateCategories();render();
+</script>
+    <script>
+    let isLoginMode = true;
+
+    // Verificar se já existe sessão ativa ao carregar a página
+    window.addEventListener('DOMContentLoaded', () => {
+        const loggedUser = localStorage.getItem('finance_logged_user');
+        if (loggedUser) {
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('app-container').style.display = 'block';
+        }
+    });
+
+    function toggleAuthMode() {
+        isLoginMode = !isLoginMode;
+        const title = document.getElementById('auth-title');
+        const btn = document.getElementById('auth-btn');
+        const toggleText = document.getElementById('auth-toggle-text');
+
+        if (isLoginMode) {
+            title.innerText = "Entrar no Sistema";
+            btn.innerText = "Entrar";
+            toggleText.innerHTML = 'Ainda não tem conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #3457d5; text-decoration: none; font-weight: bold;">Criar conta</a>';
+        } else {
+            title.innerText = "Criar Nova Conta";
+            btn.innerText = "Registar";
+            toggleText.innerHTML = 'Já tem uma conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #3457d5; text-decoration: none; font-weight: bold;">Entrar</a>';
+        }
+    }
+
+    function handleAuth() {
+        const email = document.getElementById('auth-email').value.trim();
+        const password = document.getElementById('auth-password').value.trim();
+
+        if (!email || !password) {
+            alert('Por favor, preencha o e-mail e a palavra-passe.');
+            return;
+        }
+
+        let users = JSON.parse(localStorage.getItem('finance_users') || '[]');
+
+        if (isLoginMode) {
+            const validUser = users.find(u => u.email === email && u.password === password);
+            if (validUser) {
+                localStorage.setItem('finance_logged_user', email);
+                document.getElementById('auth-container').style.display = 'none';
+                document.getElementById('app-container').style.display = 'block';
+            } else {
+                alert('E-mail ou palavra-passe incorretos.');
+            }
+        } else {
+            const userExists = users.some(u => u.email === email);
+            if (userExists) {
+                alert('Este e-mail já está registado. Tente fazer login.');
+                return;
+            }
+
+            users.push({ email, password });
+            localStorage.setItem('finance_users', JSON.stringify(users));
+            localStorage.setItem('finance_logged_user', email);
+            
+            alert('Conta criada com sucesso!');
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('app-container').style.display = 'block';
+        }
+    }
 </script>
 </body>
 </html>
