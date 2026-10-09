@@ -188,22 +188,34 @@ updateCategories();render();
     });
 
     function applyUserGreeting(firstName) {
-        // Procura um elemento de cabeçalho para inserir a saudação personalizada
-        const header = document.querySelector('header') || document.body;
+        // Procura especificamente o título principal da página para injetar o cabeçalho personalizado logo acima ou ao lado
+        const titleElement = document.querySelector('h1') || document.querySelector('header') || document.body;
+        
         if (!document.getElementById('user-greeting')) {
             const greetingDiv = document.createElement('div');
             greetingDiv.id = 'user-greeting';
-            greetingDiv.style.cssText = "padding: 10px 20px; background: #f0fdf4; color: #166534; font-weight: bold; border-bottom: 1px solid #bbf7d0; display: flex; justify-content: space-between; align-items: center;";
+            // Estilo bonito em barra horizontal alinhada com o painel
+            greetingDiv.style.cssText = "display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.1); padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; color: white; font-size: 16px; font-weight: 500;";
+            
             greetingDiv.innerHTML = `<span>Olá ${firstName},</span>`;
             
-            // Botão de Logout integrado automaticamente na barra de boas-vindas
+            // Botão de Sair com estilo moderno e elegante
             const logoutBtn = document.createElement('button');
             logoutBtn.innerText = "Terminar Sessão";
             logoutBtn.onclick = window.handleLogout;
-            logoutBtn.style.cssText = "background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px;";
+            logoutBtn.style.cssText = "background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; transition: background 0.2s;";
+            
+            logoutBtn.onmouseover = () => logoutBtn.style.background = '#dc2626';
+            logoutBtn.onmouseout = () => logoutBtn.style.background = '#ef4444';
             
             greetingDiv.appendChild(logoutBtn);
-            header.prepend(greetingDiv);
+            
+            // Insere exatamente antes do título principal do painel para ficar no topo da área azul
+            if (titleElement && titleElement.parentNode) {
+                titleElement.parentNode.insertBefore(greetingDiv, titleElement);
+            } else {
+                document.body.prepend(greetingDiv);
+            }
         }
     }
 
