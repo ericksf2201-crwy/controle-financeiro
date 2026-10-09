@@ -134,10 +134,9 @@ $("exportBtn").addEventListener("click",()=>{
 });
 updateCategories();render();
 </script>
-    <script>
-    let isLoginMode = true;
+   <script>
+    window.isLoginMode = true;
 
-    // Verificar se já existe sessão ativa ao carregar a página
     window.addEventListener('DOMContentLoaded', () => {
         const loggedUser = localStorage.getItem('finance_logged_user');
         if (loggedUser) {
@@ -146,13 +145,13 @@ updateCategories();render();
         }
     });
 
-    function toggleAuthMode() {
-        isLoginMode = !isLoginMode;
+    window.toggleAuthMode = function() {
+        window.isLoginMode = !window.isLoginMode;
         const title = document.getElementById('auth-title');
         const btn = document.getElementById('auth-btn');
         const toggleText = document.getElementById('auth-toggle-text');
 
-        if (isLoginMode) {
+        if (window.isLoginMode) {
             title.innerText = "Entrar no Sistema";
             btn.innerText = "Entrar";
             toggleText.innerHTML = 'Ainda não tem conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #3457d5; text-decoration: none; font-weight: bold;">Criar conta</a>';
@@ -161,9 +160,9 @@ updateCategories();render();
             btn.innerText = "Registar";
             toggleText.innerHTML = 'Já tem uma conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #3457d5; text-decoration: none; font-weight: bold;">Entrar</a>';
         }
-    }
+    };
 
-    function handleAuth() {
+    window.handleAuth = function() {
         const email = document.getElementById('auth-email').value.trim();
         const password = document.getElementById('auth-password').value.trim();
 
@@ -174,7 +173,7 @@ updateCategories();render();
 
         let users = JSON.parse(localStorage.getItem('finance_users') || '[]');
 
-        if (isLoginMode) {
+        if (window.isLoginMode) {
             const validUser = users.find(u => u.email === email && u.password === password);
             if (validUser) {
                 localStorage.setItem('finance_logged_user', email);
@@ -198,7 +197,7 @@ updateCategories();render();
             document.getElementById('auth-container').style.display = 'none';
             document.getElementById('app-container').style.display = 'block';
         }
-    }
+    };
 </script>
 </body>
 </html>
