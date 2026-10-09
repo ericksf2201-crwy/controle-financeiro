@@ -141,4 +141,227 @@ function render(){
   const outs=shown.filter(r=>r.type==="expense").reduce((s,r)=>s+r.amount,0);
   $("income").textContent=money(ins);$("expenses").textContent=money(outs);$("balance").textContent=money(ins-outs);$("count").textContent=shown.length;
   $("balance").className="amount "+(ins-outs<0?"expense":"balance");
-  $("entries").innerHTML=shown.map(r=>`<tr><td>${new
+  $("entries").innerHTML=shown.map(r=>`<tr><td>${new Date(r.date+"T12:00:00").toLocaleDateString("pt-BR")}</td><td><strong>${escapeHtml(r.description)}</strong><br><span style="color:#697386">${escapeHtml(r.payment)}</span></td><td><span class="tag">${escapeHtml(r.category)}</span></td><td class="${r.type==="income"?"income":"expense"}"><strong>${r.type==="income"?"+":"−"} ${money(r.amount)}</strong></td><td><button class="delete" data-delete="${r.id}" aria-label="Excluir ${escapeHtml(r.description)}">Excluir</button></td></tr>`).join("");
+  $("empty").hidden=shown.length>0;
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+$("expenseType").addEventListener("click",()=>{type="expense";updateCategories()});
+$("incomeType").addEventListener("click",()=>{type="income";updateCategories()});
+$("monthFilter").addEventListener("change",render);
+$("entryForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const amount=Number($("amount").value);
+  if(!Number.isFinite(amount)||amount<=0){alert("Informe um valor maior que zero.");return}
+  records.push({id:Date.now()+Math.floor(Math.random()*1000),type,description:$("description").value.trim(),amount:Math.round(amount*100)/100,category:$("category").value,date:$("date").value,payment:$("payment").value});
+  save();$("description").value="";$("amount").value="";$("description").focus();render();
+});
+$("entries").addEventListener("click",e=>{
+  const btn=e.target.closest("[data-delete]");if(!btn)return;
+  const r=records.find(x=>x.id===Number(btn.dataset.delete));
+  if(r&&confirm(`Excluir o lançamento "${r.description}"?`)){records=records.filter(x=>x.id!==r.id);save();render()}
+});
+$("clearBtn").addEventListener("click",()=>{
+  if(confirm("Tem certeza? Todos os lançamentos salvos neste navegador serão apagados.")){records=[];save();render()}
+});
+$("exportBtn").addEventListener("click",()=>{
+  const rows=[["Data","Tipo","Descrição","Categoria","Forma de pagamento","Valor"],...records.map(r=>[r.date,r.type==="income"?"Entrada":"Despesa",r.description,r.category,r.payment,r.amount.toFixed(2).replace(".",",")])];
+  const csv="\uFEFF"+rows.map(row=>row.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(";")).join("\r\n");
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download="meu-controle-financeiro.csv";a.click();URL.revokeObjectURL(url);
+});
+updateCategories();render();
+</script>
+
+<script>
+    window.isLoginMode = true;
+    let inactivityTimer;
+
+    function resetInactivityTimer() {
+        clearTimeout(inactivityTimer);
+        const loggedUser = localStorage.getItem('finance_logged_user');
+        if (loggedUser) {
+            inactivityTimer = setTimeout(() => {
+                window.handleLogout();
+                alert('A sua sessão expirou devido a 30 minutos de inatividade.');
+            }, 30 * 60 * 1000);
+        }
+    }
+
+    ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(event => {
+        window.addEventListener(event, resetInactivityTimer);
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+        checkRegistrationAvailability();
+        const loggedUserJSON = localStorage.getItem('finance_logged_user');
+        if (loggedUserJSON) {
+            const user = JSON.parse(loggedUserJSON);
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('app-container').style.display = 'block';
+            applyUserGreeting(user.firstname);
+            resetInactivityTimer();
+        }
+    });
+
+    function checkRegistrationAvailability() {
+        let users = JSON.parse(localStorage.getItem('finance_users') || '[]');
+        const toggleText = document.getElementById('auth-toggle-text');
+        if (users.length > 0 && toggleText) {
+            toggleText.style.display = 'none';
+        }
+    }
+
+    function applyUserGreeting(firstName) {
+        const titleElement = document.querySelector('h1');
+        if (!document.getElementById('user-greeting-container') && titleElement) {
+            const container = document.createElement('div');
+            container.id = 'user-greeting-container';
+            container.style.cssText = "display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;";
+            
+            const greeting = document.createElement('h2');
+            greeting.innerText = `Olá ${firstName},`;
+            greeting.style.cssText = "color: #ffffff; font-size: clamp(22px, 5vw, 28px); font-weight: 700; margin: 0;";
+            
+            const logoutBtn = document.createElement('button');
+            logoutBtn.innerText = "Terminar Sessão";
+            logoutBtn.onclick = window.handleLogout;
+            logoutBtn.style.cssText = "background: #dc2626; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; transition: background 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);";
+            
+            logoutBtn.onmouseover = () => logoutBtn.style.background = '#b91c1c';
+            logoutBtn.onmouseout = () => logoutBtn.style.background = '#dc2626';
+            
+            container.appendChild(greeting);
+            container.appendChild(logoutBtn);
+            
+            titleElement.parentNode.insertBefore(container, titleElement);
+        }
+    }
+
+    window.togglePasswordVisibility = function() {
+        const passwordInput = document.getElementById('auth-password');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    };
+
+    window.toggleAuthMode = function() {
+        let users = JSON.parse(localStorage.getItem('finance_users') || '[]');
+        if (users.length > 0) return;
+
+        window.isLoginMode = !window.isLoginMode;
+        const title = document.getElementById('auth-title');
+        const btn = document.getElementById('auth-btn');
+        const toggleText = document.getElementById('auth-toggle-text');
+        const registerFields = document.getElementById('register-fields');
+        const lblUsername = document.getElementById('lbl-username');
+        const lblPassword = document.getElementById('lbl-password');
+
+        if (window.isLoginMode) {
+            title.innerText = "Entrar no Sistema";
+            btn.innerText = "Entrar";
+            registerFields.style.display = 'none';
+            lblUsername.innerText = "Usuário";
+            lblPassword.innerText = "Palavra-passe";
+            toggleText.innerHTML = 'Ainda não tem conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #2563eb; text-decoration: none; font-weight: bold;">Criar conta</a>';
+        } else {
+            title.innerText = "Criar Nova Conta";
+            btn.innerText = "Registar";
+            registerFields.style.display = 'block';
+            lblUsername.innerText = "Usuário (6 a 20 caracteres)";
+            lblPassword.innerText = "Palavra-passe (Mín. 8 caracteres, maiúsculas, minúsculas e números)";
+            toggleText.innerHTML = 'Já tem uma conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #2563eb; text-decoration: none; font-weight: bold;">Entrar</a>';
+        }
+    };
+
+    window.handleAuth = function() {
+        const username = document.getElementById('auth-username').value.trim();
+        const password = document.getElementById('auth-password').value.trim();
+
+        let users = JSON.parse(localStorage.getItem('finance_users') || '[]');
+
+        if (window.isLoginMode) {
+            if (!username || !password) {
+                alert('Por favor, preencha o usuário e a palavra-passe.');
+                return;
+            }
+
+            const validUser = users.find(u => u.username === username && u.password === password);
+            if (validUser) {
+                localStorage.setItem('finance_logged_user', JSON.stringify(validUser));
+                document.getElementById('auth-container').style.display = 'none';
+                document.getElementById('app-container').style.display = 'block';
+                applyUserGreeting(validUser.firstname);
+                resetInactivityTimer();
+            } else {
+                alert('Usuário ou palavra-passe incorretos.');
+            }
+        } else {
+            if (users.length > 0) {
+                alert('Já existe uma conta registada neste sistema.');
+                return;
+            }
+
+            const firstname = document.getElementById('auth-firstname').value.trim();
+            const lastname = document.getElementById('auth-lastname').value.trim();
+            const email = document.getElementById('auth-email').value.trim();
+
+            if (!firstname || !lastname || !email || !username || !password) {
+                alert('Por favor, preencha todos os campos do cadastro.');
+                return;
+            }
+
+            if (username.length < 6 || username.length > 20) {
+                alert('O nome de usuário deve conter entre 6 e 20 caracteres.');
+                return;
+            }
+
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+            if (!passwordRegex.test(password)) {
+                alert('A palavra-passe deve ter pelo menos 8 caracteres e incluir letras maiúsculas, minúsculas e números.');
+                return;
+            }
+
+            const newUser = { firstname, lastname, email, username, password };
+            users.push(newUser);
+            localStorage.setItem('finance_users', JSON.stringify(users));
+            localStorage.setItem('finance_logged_user', JSON.stringify(newUser));
+            
+            alert('Conta criada com sucesso!');
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('app-container').style.display = 'block';
+            applyUserGreeting(firstname);
+            resetInactivityTimer();
+            
+            location.reload(); 
+        }
+    };
+
+    window.handleLogout = function() {
+        localStorage.removeItem('finance_logged_user');
+        clearTimeout(inactivityTimer);
+        
+        window.isLoginMode = true;
+        document.getElementById('app-container').style.display = 'none';
+        document.getElementById('auth-container').style.display = 'flex';
+        
+        const title = document.getElementById('auth-title');
+        const btn = document.getElementById('auth-btn');
+        const registerFields = document.getElementById('register-fields');
+        const lblUsername = document.getElementById('lbl-username');
+        const lblPassword = document.getElementById('lbl-password');
+
+        if (title) title.innerText = "Entrar no Sistema";
+        if (btn) btn.innerText = "Entrar";
+        if (registerFields) registerFields.style.display = 'none';
+        if (lblUsername) lblUsername.innerText = "Usuário";
+        if (lblPassword) lblPassword.innerText = "Palavra-passe";
+        
+        document.getElementById('auth-username').value = '';
+        document.getElementById('auth-password').value = '';
+        document.getElementById('auth-password').type = 'password';
+    };
+</script>
+</body>
+</html>
