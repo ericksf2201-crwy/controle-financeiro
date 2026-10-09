@@ -131,4 +131,14 @@ function updateMonthOptions(){
   const months=new Set([currentMonth(),...records.map(r=>monthOf(r.date))]);
   const sorted=[...months].sort().reverse();
   select.innerHTML=sorted.map(m=>`<option value="${m}">${monthLabel(m)}</option>`).join("")+`<option value="all">Todos os meses</option>`;
-  if([...select.options].some(o=>o.value===current))select.value=current;else select
+  if([...select.options].some(o=>o.value===current))select.value=current;else select.value=currentMonth();
+}
+function render(){
+  updateMonthOptions();
+  const filter=$("monthFilter").value || currentMonth();
+  const shown=records.filter(r=>filter==="all"||monthOf(r.date)===filter).sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
+  const ins=shown.filter(r=>r.type==="income").reduce((s,r)=>s+r.amount,0);
+  const outs=shown.filter(r=>r.type==="expense").reduce((s,r)=>s+r.amount,0);
+  $("income").textContent=money(ins);$("expenses").textContent=money(outs);$("balance").textContent=money(ins-outs);$("count").textContent=shown.length;
+  $("balance").className="amount "+(ins-outs<0?"expense":"balance");
+  $("entries").innerHTML=shown.map(r=>`<tr><td>${new
