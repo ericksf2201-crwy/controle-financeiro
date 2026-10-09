@@ -7,51 +7,67 @@
 <style>
 :root{--bg:#f4f6fb;--card:#fff;--text:#172033;--muted:#697386;--line:#e5e9f2;--blue:#3457d5;--green:#16845b;--red:#c43d4b;--shadow:0 8px 28px rgba(25,40,80,.07)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-header{background:#172554;color:#fff;padding:26px 20px 30px} .wrap{max-width:1100px;margin:auto}header h1{margin:0 0 5px;font-size:clamp(24px,4vw,34px)}header p{margin:0;color:#dbe5ff}
+header{background:#172554;color:#fff;padding:26px 20px 30px} .wrap{max-width:1100px;margin:auto}header h1{margin:0 0 5px;font-size:clamp(22px,4vw,34px)}header p{margin:0;color:#dbe5ff}
 main{max-width:1100px;margin:-14px auto 40px;padding:0 16px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}
-.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.card{padding:18px}.label{font-size:13px;color:var(--muted);margin-bottom:8px}.amount{font-size:clamp(20px,3vw,27px);font-weight:750;letter-spacing:-.5px}.income{color:var(--green)}.expense{color:var(--red)}.balance{color:var(--blue)}
+.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.card{padding:18px}.label{font-size:13px;color:var(--muted);margin-bottom:8px}.amount{font-size:clamp(18px,3vw,27px);font-weight:750;letter-spacing:-.5px}.income{color:var(--green)}.expense{color:var(--red)}.balance{color:var(--blue)}
 .layout{display:grid;grid-template-columns:350px minmax(0,1fr);gap:18px;align-items:start}.panel{padding:20px;margin-bottom:18px}.panel h2{font-size:18px;margin:0 0 16px}.field{margin-bottom:13px}label{display:block;font-size:13px;font-weight:650;margin-bottom:6px;color:#404b61}input,select,button{font:inherit}input,select{width:100%;padding:11px 12px;border:1px solid #d8deea;border-radius:10px;background:#fff;color:var(--text)}input:focus,select:focus{outline:2px solid #c7d2fe;border-color:var(--blue)}.type-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:15px}.type-switch button{padding:10px;border:1px solid var(--line);border-radius:10px;background:#f8faff;color:var(--muted);cursor:pointer;font-weight:700}.type-switch button.active{background:#e8edff;border-color:#aab9ff;color:#2443b8}
-.primary{border:0;background:var(--blue);color:white;font-weight:750;padding:12px 16px;border-radius:10px;cursor:pointer;width:100%}.primary:hover{background:#2847bd}.hint{font-size:12px;color:var(--muted);margin:12px 0 0}.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}.toolbar h2{margin:0}.toolbar select{width:auto;min-width:155px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:570px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-size:13px}th{color:var(--muted);font-weight:700;background:#fafbfe}td strong{font-size:14px}.tag{display:inline-block;border-radius:99px;background:#eef2ff;color:#3449a6;padding:4px 8px;font-size:12px}.delete{border:0;background:#fff0f1;color:var(--red);border-radius:8px;padding:7px 9px;cursor:pointer;font-weight:700}.empty{text-align:center;padding:30px 10px;color:var(--muted)}.footer-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.secondary{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:9px;cursor:pointer;color:var(--text)}.secondary:hover{background:#f7f8fc}.notice{font-size:12px;color:var(--muted);margin-top:12px}
-@media(max-width:850px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}.panel{padding:16px}}
-@media(max-width:430px){.cards{gap:9px}.card{padding:13px}.amount{font-size:20px}header{padding:22px 16px 28px}}
+.primary{border:0;background:var(--blue);color:white;font-weight:750;padding:12px 16px;border-radius:10px;cursor:pointer;width:100%}.primary:hover{background:#2847bd}.hint{font-size:12px;color:var(--muted);margin:12px 0 0}.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}.toolbar h2{margin:0}.toolbar select{width:auto;min-width:155px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:570px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-size:13px}th{color:var(--muted);font-weight:700;background:#fafbfe}td strong{font-size:14px}.tag{display:inline-block;border-radius:99px;background:#eef2ff;color:#3449a6;padding:4px 8px;font-size:12px}.delete{border:0;background:#fff0f1;color:var(--red);border-radius:8px;padding:7px 9px;cursor:pointer;font-weight:700}.empty{text-align:center;padding:30px 10px;color:var(--muted)}.footer-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.secondary{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:99px;cursor:pointer;color:var(--text)}.secondary:hover{background:#f7f8fc}.notice{font-size:12px;color:var(--muted);margin-top:12px}
+
+/* Regras para telemóveis e tablets */
+@media(max-width:850px){
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .layout{grid-template-columns:1fr}
+  .panel{padding:16px}
+}
+@media(max-width:480px){
+  .cards{gap:9px}
+  .card{padding:13px}
+  header{padding:20px 16px 24px}
+  #auth-card{padding:24px 20px !important;}
+  #user-greeting-container{flex-direction: column; align-items: flex-start !important; gap: 10px;}
+  #user-greeting-container button{width: 100%;}
+}
 </style>
 </head>
 <body>
-  <!-- ECRÃ DE AUTENTICAÇÃO -->
-<div id="auth-container" style="display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position: fixed; top: 0; left: 0; width: 100%; z-index: 9999;">
-    <div style="background: rgba(255, 255, 255, 0.98); padding: 40px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); width: 100%; max-width: 420px; backdrop-filter: blur(12px);">
-        <h2 id="auth-title" style="margin-bottom: 25px; color: #0f172a; text-align: center; font-size: 26px; font-weight: 700;">Entrar no Sistema</h2>
+  <!-- ECRÃ DE AUTENTICAÇÃO RESPONSIVO -->
+<div id="auth-container" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 16px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position: fixed; top: 0; left: 0; width: 100%; z-index: 9999; overflow-y: auto;">
+    <div id="auth-card" style="background: rgba(255, 255, 255, 0.98); padding: 36px 30px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); width: 100%; max-width: 420px; backdrop-filter: blur(12px); margin: auto;">
+        <h2 id="auth-title" style="margin-bottom: 22px; color: #0f172a; text-align: center; font-size: clamp(20px, 5vw, 26px); font-weight: 700;">Entrar no Sistema</h2>
         
         <!-- Campos de Registo (Ocultos no modo Login) -->
         <div id="register-fields" style="display: none;">
-            <div style="margin-bottom: 15px;">
+            <div style="margin-bottom: 14px;">
                 <label style="display: block; margin-bottom: 5px; font-size: 13px; color: #334155; font-weight: 600;">Nome</label>
                 <input type="text" id="auth-firstname" placeholder="O seu nome" style="width: 100%; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
             </div>
-            <div style="margin-bottom: 15px;">
+            <div style="margin-bottom: 14px;">
                 <label style="display: block; margin-bottom: 5px; font-size: 13px; color: #334155; font-weight: 600;">Sobrenome</label>
                 <input type="text" id="auth-lastname" placeholder="O seu sobrenome" style="width: 100%; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
             </div>
-            <div style="margin-bottom: 15px;">
+            <div style="margin-bottom: 14px;">
                 <label style="display: block; margin-bottom: 5px; font-size: 13px; color: #334155; font-weight: 600;">E-mail</label>
                 <input type="email" id="auth-email" placeholder="seu@email.com" style="width: 100%; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
             </div>
         </div>
 
         <!-- Campos Comuns (Usuário e Senha) -->
-        <div style="margin-bottom: 15px;">
-            <label style="display: block; margin-bottom: 5px; font-size: 13px; color: #334155; font-weight: 600;">Usuário (6 a 20 caracteres)</label>
+        <div style="margin-bottom: 14px;">
+            <label id="lbl-username" style="display: block; margin-bottom: 5px; font-size: 13px; color: #334155; font-weight: 600;">Usuário</label>
             <input type="text" id="auth-username" placeholder="Nome de usuário" style="width: 100%; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
         </div>
 
-        <div style="margin-bottom: 25px;">
-            <label style="display: block; margin-bottom: 5px; font-size: 13px; color: #334155; font-weight: 600;">Palavra-passe (Mín. 8 caracteres, maiúsculas, minúsculas e números)</label>
-            <input type="password" id="auth-password" placeholder="********" style="width: 100%; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+        <div style="margin-bottom: 22px;">
+            <label id="lbl-password" style="display: block; margin-bottom: 5px; font-size: 13px; color: #334155; font-weight: 600;">Palavra-passe</label>
+            <div style="position: relative; display: flex; align-items: center;">
+                <input type="password" id="auth-password" placeholder="********" style="width: 100%; padding: 11px 45px 11px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                <button type="button" id="toggle-password-btn" onclick="togglePasswordVisibility()" style="position: absolute; right: 10px; background: transparent; border: none; cursor: pointer; font-size: 18px; padding: 4px; line-height: 1;" title="Mostrar/Ocultar palavra-passe">🕶️</button>
+            </div>
         </div>
 
         <button id="auth-btn" onclick="handleAuth()" style="width: 100%; padding: 13px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s;">Entrar</button>
         
-        <p id="auth-toggle-text" style="text-align: center; font-size: 14px; color: #475569; margin-top: 20px;">
+        <p id="auth-toggle-text" style="text-align: center; font-size: 14px; color: #475569; margin-top: 18px;">
             Ainda não tem conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #2563eb; text-decoration: none; font-weight: bold;">Criar conta</a>
         </p>
     </div>
@@ -171,7 +187,7 @@ updateCategories();render();
         }
     }
 
-    ['mousemove', 'keydown', 'click', 'scroll'].forEach(event => {
+    ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(event => {
         window.addEventListener(event, resetInactivityTimer);
     });
 
@@ -200,11 +216,11 @@ updateCategories();render();
         if (!document.getElementById('user-greeting-container') && titleElement) {
             const container = document.createElement('div');
             container.id = 'user-greeting-container';
-            container.style.cssText = "display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px;";
+            container.style.cssText = "display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;";
             
             const greeting = document.createElement('h2');
             greeting.innerText = `Olá ${firstName},`;
-            greeting.style.cssText = "color: #ffffff; font-size: 28px; font-weight: 700; margin: 0;";
+            greeting.style.cssText = "color: #ffffff; font-size: clamp(22px, 5vw, 28px); font-weight: 700; margin: 0;";
             
             const logoutBtn = document.createElement('button');
             logoutBtn.innerText = "Terminar Sessão";
@@ -221,6 +237,15 @@ updateCategories();render();
         }
     }
 
+    window.togglePasswordVisibility = function() {
+        const passwordInput = document.getElementById('auth-password');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    };
+
     window.toggleAuthMode = function() {
         let users = JSON.parse(localStorage.getItem('finance_users') || '[]');
         if (users.length > 0) return;
@@ -230,16 +255,22 @@ updateCategories();render();
         const btn = document.getElementById('auth-btn');
         const toggleText = document.getElementById('auth-toggle-text');
         const registerFields = document.getElementById('register-fields');
+        const lblUsername = document.getElementById('lbl-username');
+        const lblPassword = document.getElementById('lbl-password');
 
         if (window.isLoginMode) {
             title.innerText = "Entrar no Sistema";
             btn.innerText = "Entrar";
             registerFields.style.display = 'none';
+            lblUsername.innerText = "Usuário";
+            lblPassword.innerText = "Palavra-passe";
             toggleText.innerHTML = 'Ainda não tem conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #2563eb; text-decoration: none; font-weight: bold;">Criar conta</a>';
         } else {
             title.innerText = "Criar Nova Conta";
             btn.innerText = "Registar";
             registerFields.style.display = 'block';
+            lblUsername.innerText = "Usuário (6 a 20 caracteres)";
+            lblPassword.innerText = "Palavra-passe (Mín. 8 caracteres, maiúsculas, minúsculas e números)";
             toggleText.innerHTML = 'Já tem uma conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #2563eb; text-decoration: none; font-weight: bold;">Entrar</a>';
         }
     };
@@ -318,12 +349,18 @@ updateCategories();render();
         const title = document.getElementById('auth-title');
         const btn = document.getElementById('auth-btn');
         const registerFields = document.getElementById('register-fields');
+        const lblUsername = document.getElementById('lbl-username');
+        const lblPassword = document.getElementById('lbl-password');
+
         if (title) title.innerText = "Entrar no Sistema";
         if (btn) btn.innerText = "Entrar";
         if (registerFields) registerFields.style.display = 'none';
+        if (lblUsername) lblUsername.innerText = "Usuário";
+        if (lblPassword) lblPassword.innerText = "Palavra-passe";
         
         document.getElementById('auth-username').value = '';
         document.getElementById('auth-password').value = '';
+        document.getElementById('auth-password').type = 'password';
     };
 </script>
 </body>
