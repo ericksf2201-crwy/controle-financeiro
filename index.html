@@ -18,7 +18,7 @@ main{max-width:1100px;margin:-14px auto 40px;padding:0 16px}.cards{display:grid;
 </head>
 <body>
   <!-- ECRÃ DE AUTENTICAÇÃO -->
-<div id="auth-container" style="display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #0f172a 1e%, #1e293b 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position: fixed; top: 0; left: 0; width: 100%; z-index: 9999;">
+<div id="auth-container" style="display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position: fixed; top: 0; left: 0; width: 100%; z-index: 9999;">
     <div style="background: rgba(255, 255, 255, 0.98); padding: 40px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); width: 100%; max-width: 420px; backdrop-filter: blur(12px);">
         <h2 id="auth-title" style="margin-bottom: 25px; color: #0f172a; text-align: center; font-size: 26px; font-weight: 700;">Entrar no Sistema</h2>
         
@@ -57,25 +57,7 @@ main{max-width:1100px;margin:-14px auto 40px;padding:0 16px}.cards{display:grid;
     </div>
 </div>
 
-        <!-- Campos Comuns (Usuário e Senha) -->
-        <div style="margin-bottom: 15px;">
-            <label style="display: block; margin-bottom: 5px; font-size: 13px; color: #444; font-weight: 600;">Usuário (6 a 20 caracteres)</label>
-            <input type="text" id="auth-username" placeholder="Nome de usuário" style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
-        </div>
-
-        <div style="margin-bottom: 25px;">
-            <label style="display: block; margin-bottom: 5px; font-size: 13px; color: #444; font-weight: 600;">Palavra-passe (Mín. 8 caracteres, maiúsculas, minúsculas e números)</label>
-            <input type="password" id="auth-password" placeholder="********" style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
-        </div>
-
-        <button id="auth-btn" onclick="handleAuth()" style="width: 100%; padding: 12px; background: #4f46e5; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s;">Entrar</button>
-        
-        <p id="auth-toggle-text" style="text-align: center; font-size: 14px; color: #666; margin-top: 20px;">
-            Ainda não tem conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #4f46e5; text-linejoin: round; text-decoration: none; font-weight: bold;">Criar conta</a>
-        </p>
-    </div>
-</div>
-  <div id="app-container" style="display: none;">
+<div id="app-container" style="display: none;">
 <header><div class="wrap"><h1>Meu Controle Financeiro</h1><p>Organize suas entradas, despesas e saldo em um só lugar.</p></div></header>
 <main>
   <section class="cards">
@@ -107,6 +89,8 @@ main{max-width:1100px;margin:-14px auto 40px;padding:0 16px}.cards{display:grid;
     </section>
   </div>
 </main>
+</div>
+
 <script>
 const STORAGE_KEY = "meuControleFinanceiro.v1";
 const categories = {
@@ -171,7 +155,8 @@ $("exportBtn").addEventListener("click",()=>{
 });
 updateCategories();render();
 </script>
-  <script>
+
+<script>
     window.isLoginMode = true;
     let inactivityTimer;
 
@@ -205,7 +190,6 @@ updateCategories();render();
     function checkRegistrationAvailability() {
         let users = JSON.parse(localStorage.getItem('finance_users') || '[]');
         const toggleText = document.getElementById('auth-toggle-text');
-        // Se já existir pelo menos uma conta criada, remove a opção de criar nova conta
         if (users.length > 0 && toggleText) {
             toggleText.style.display = 'none';
         }
@@ -216,7 +200,6 @@ updateCategories();render();
         if (!document.getElementById('user-greeting-container') && titleElement) {
             const container = document.createElement('div');
             container.id = 'user-greeting-container';
-            // Layout profissional integrado diretamente no topo azul, sem tarja branca
             container.style.cssText = "display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px;";
             
             const greeting = document.createElement('h2');
@@ -240,7 +223,7 @@ updateCategories();render();
 
     window.toggleAuthMode = function() {
         let users = JSON.parse(localStorage.getItem('finance_users') || '[]');
-        if (users.length > 0) return; // Bloqueia se já houver conta
+        if (users.length > 0) return;
 
         window.isLoginMode = !window.isLoginMode;
         const title = document.getElementById('auth-title');
@@ -284,7 +267,6 @@ updateCategories();render();
                 alert('Usuário ou palavra-passe incorretos.');
             }
         } else {
-            // Impede registo se já existir conta
             if (users.length > 0) {
                 alert('Já existe uma conta registada neste sistema.');
                 return;
@@ -321,7 +303,6 @@ updateCategories();render();
             applyUserGreeting(firstname);
             resetInactivityTimer();
             
-            // Oculta opção de registo após criar
             location.reload(); 
         }
     };
@@ -330,12 +311,10 @@ updateCategories();render();
         localStorage.removeItem('finance_logged_user');
         clearTimeout(inactivityTimer);
         
-        // Redireciona e força o modo de Login limpo
         window.isLoginMode = true;
         document.getElementById('app-container').style.display = 'none';
         document.getElementById('auth-container').style.display = 'flex';
         
-        // Restaura ecrã de login estritamente
         const title = document.getElementById('auth-title');
         const btn = document.getElementById('auth-btn');
         const registerFields = document.getElementById('register-fields');
@@ -343,7 +322,6 @@ updateCategories();render();
         if (btn) btn.innerText = "Entrar";
         if (registerFields) registerFields.style.display = 'none';
         
-        // Limpar inputs
         document.getElementById('auth-username').value = '';
         document.getElementById('auth-password').value = '';
     };
