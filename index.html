@@ -7,7 +7,9 @@
 <style>
 :root{--bg:#f8fafc;--card:#ffffff;--text:#1e293b;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--green:#16a34a;--red:#dc2626;--shadow:0 4px 20px rgba(0,0,0,0.05)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-header{background:#0f172a;color:#fff;padding:26px 20px 30px} .wrap{max-width:1100px;margin:auto}header h1{margin:0 0 5px;font-size:clamp(22px,4vw,32px)}header p{margin:0;color:#94a3b8}
+header{background:#0f172a;color:#fff;padding:26px 20px 30px} .wrap{max-width:1100px;margin:auto}
+header h1#main-header-title{margin:4px 0 5px;font-size:clamp(18px,3.5vw,24px);font-weight:600;color:#e2e8f0}
+header p{margin:0;color:#94a3b8}
 main{max-width:1100px;margin:-14px auto 40px;padding:0 16px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}
 .card,.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}.card{padding:18px}.label{font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:600}.amount{font-size:clamp(18px,3vw,26px);font-weight:750;letter-spacing:-.5px}.income{color:var(--green)}.expense{color:var(--red)}.balance{color:var(--blue)}
 .layout{display:grid;grid-template-columns:350px minmax(0,1fr);gap:18px;align-items:start}.panel{padding:20px;margin-bottom:18px}.panel h2{font-size:18px;margin:0 0 16px;color:#0f172a;font-weight:700}.field{margin-bottom:13px}label{display:block;font-size:13px;font-weight:650;margin-bottom:6px;color:#334155}input,select,button{font:inherit}input,select{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;color:var(--text)}input:focus,select:focus{outline:2px solid #93c5fd;border-color:var(--blue)}.type-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:15px}.type-switch button{padding:10px;border:1px solid var(--line);border-radius:10px;background:#f1f5f9;color:var(--muted);cursor:pointer;font-weight:700}.type-switch button.active{background:#dbeafe;border-color:#bfdbfe;color:#1d4ed8}
@@ -344,11 +346,11 @@ updateCategories();render();
         if (!document.getElementById('user-greeting-container') && headerTitle) {
             const container = document.createElement('div');
             container.id = 'user-greeting-container';
-            container.style.cssText = "display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 8px; flex-wrap: wrap; gap: 10px;";
+            container.style.cssText = "display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 4px; flex-wrap: wrap; gap: 10px;";
             
             const greeting = document.createElement('h2');
             greeting.innerText = `Olá ${firstName},`;
-            greeting.style.cssText = "color: #ffffff; font-size: clamp(22px, 5vw, 28px); font-weight: 700; margin: 0;";
+            greeting.style.cssText = "color: #ffffff; font-size: clamp(28px, 6vw, 36px); font-weight: 800; margin: 0;";
             
             const logoutBtn = document.createElement('button');
             logoutBtn.innerText = "Terminar Sessão";
@@ -403,99 +405,4 @@ updateCategories();render();
             registerFields.style.display = 'block';
             lblUsername.innerText = "Usuário (6 a 20 caracteres)";
             lblPassword.innerText = "Palavra-passe (Mín. 8 caracteres, maiúsculas, minúsculas e números)";
-            toggleText.innerHTML = 'Já tem uma conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #2563eb; text-decoration: none; font-weight: bold;">Entrar</a>';
-        }
-    }
-
-    function handleAuth() {
-        const username = document.getElementById('auth-username').value.trim();
-        const password = document.getElementById('auth-password').value.trim();
-
-        let users = JSON.parse(localStorage.getItem('finance_users') || '[]');
-
-        if (window.isLoginMode) {
-            if (!username || !password) {
-                alert('Por favor, preencha o usuário e a palavra-passe.');
-                return;
-            }
-
-            const validUser = users.find(u => u.username === username && u.password === password);
-            if (validUser) {
-                localStorage.setItem('finance_logged_user', JSON.stringify(validUser));
-                document.getElementById('auth-container').style.display = 'none';
-                document.getElementById('app-container').style.display = 'block';
-                applyUserGreeting(validUser.firstname);
-                resetInactivityTimer();
-            } else {
-                alert('Usuário ou palavra-passe incorretos.');
-            }
-        } else {
-            if (users.length > 0) {
-                alert('Já existe uma conta registada neste sistema.');
-                return;
-            }
-
-            const firstname = document.getElementById('auth-firstname').value.trim();
-            const lastname = document.getElementById('auth-lastname').value.trim();
-            const email = document.getElementById('auth-email').value.trim();
-
-            if (!firstname || !lastname || !email || !username || !password) {
-                alert('Por favor, preencha todos os campos do cadastro.');
-                return;
-            }
-
-            if (username.length < 6 || username.length > 20) {
-                alert('O nome de usuário deve conter entre 6 e 20 caracteres.');
-                return;
-            }
-
-            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-            if (!passwordRegex.test(password)) {
-                alert('A palavra-passe deve ter pelo menos 8 caracteres e incluir letras maiúsculas, minúsculas e números.');
-                return;
-            }
-
-            const newUser = { firstname, lastname, email, username, password };
-            users.push(newUser);
-            localStorage.setItem('finance_users', JSON.stringify(users));
-            localStorage.setItem('finance_logged_user', JSON.stringify(newUser));
-            
-            alert('Conta criada com sucesso!');
-            document.getElementById('auth-container').style.display = 'none';
-            document.getElementById('app-container').style.display = 'block';
-            applyUserGreeting(firstname);
-            resetInactivityTimer();
-            
-            location.reload(); 
-        }
-    }
-
-    function handleLogout() {
-        localStorage.removeItem('finance_logged_user');
-        clearTimeout(inactivityTimer);
-        
-        window.isLoginMode = true;
-        document.getElementById('app-container').style.display = 'none';
-        document.getElementById('auth-container').style.display = 'flex';
-        
-        const title = document.getElementById('auth-title');
-        const btn = document.getElementById('auth-btn');
-        const registerFields = document.getElementById('register-fields');
-        const lblUsername = document.getElementById('lbl-username');
-        const lblPassword = document.getElementById('lbl-password');
-        const toggleBtn = document.getElementById('toggle-password-btn');
-
-        if (title) title.innerText = "Entrar no Sistema";
-        if (btn) btn.innerText = "Entrar";
-        if (registerFields) registerFields.style.display = 'none';
-        if (lblUsername) lblUsername.innerText = "Usuário";
-        if (lblPassword) lblPassword.innerText = "Palavra-passe";
-        
-        document.getElementById('auth-username').value = '';
-        document.getElementById('auth-password').value = '';
-        document.getElementById('auth-password').type = 'password';
-        if (toggleBtn) toggleBtn.innerText = '🕶️';
-    }
-</script>
-</body>
-</html>
+            toggleText.innerHTML = 'Já tem uma conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #
