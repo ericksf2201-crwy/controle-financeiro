@@ -5,28 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Meu Controle Financeiro</title>
 <style>
-:root{--bg:#f4f6fb;--card:#fff;--text:#172033;--muted:#697386;--line:#e5e9f2;--blue:#3457d5;--green:#16845b;--red:#c43d4b;--shadow:0 8px 28px rgba(25,40,80,.07)}
+:root{--bg:#f8fafc;--card:#ffffff;--text:#1e293b;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--green:#16a34a;--red:#dc2626;--shadow:0 4px 20px rgba(0,0,0,0.05)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-header{background:#172554;color:#fff;padding:26px 20px 30px} .wrap{max-width:1100px;margin:auto}header h1{margin:0 0 5px;font-size:clamp(22px,4vw,34px)}header p{margin:0;color:#dbe5ff}
+header{background:#0f172a;color:#fff;padding:26px 20px 30px} .wrap{max-width:1100px;margin:auto}header h1{margin:0 0 5px;font-size:clamp(22px,4vw,32px)}header p{margin:0;color:#94a3b8}
 main{max-width:1100px;margin:-14px auto 40px;padding:0 16px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}
-.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.card{padding:18px}.label{font-size:13px;color:var(--muted);margin-bottom:8px}.amount{font-size:clamp(18px,3vw,27px);font-weight:750;letter-spacing:-.5px}.income{color:var(--green)}.expense{color:var(--red)}.balance{color:var(--blue)}
-.layout{display:grid;grid-template-columns:350px minmax(0,1fr);gap:18px;align-items:start}.panel{padding:20px;margin-bottom:18px}.panel h2{font-size:18px;margin:0 0 16px}.field{margin-bottom:13px}label{display:block;font-size:13px;font-weight:650;margin-bottom:6px;color:#404b61}input,select,button{font:inherit}input,select{width:100%;padding:11px 12px;border:1px solid #d8deea;border-radius:10px;background:#fff;color:var(--text)}input:focus,select:focus{outline:2px solid #c7d2fe;border-color:var(--blue)}.type-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:15px}.type-switch button{padding:10px;border:1px solid var(--line);border-radius:10px;background:#f8faff;color:var(--muted);cursor:pointer;font-weight:700}.type-switch button.active{background:#e8edff;border-color:#aab9ff;color:#2443b8}
-.primary{border:0;background:var(--blue);color:white;font-weight:750;padding:12px 16px;border-radius:10px;cursor:pointer;width:100%}.primary:hover{background:#2847bd}.hint{font-size:12px;color:var(--muted);margin:12px 0 0}.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}.toolbar h2{margin:0}.toolbar select{width:auto;min-width:155px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:570px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-size:13px}th{color:var(--muted);font-weight:700;background:#fafbfe}td strong{font-size:14px}.tag{display:inline-block;border-radius:99px;background:#eef2ff;color:#3449a6;padding:4px 8px;font-size:12px}.delete{border:0;background:#fff0f1;color:var(--red);border-radius:8px;padding:7px 9px;cursor:pointer;font-weight:700}.empty{text-align:center;padding:30px 10px;color:var(--muted)}.footer-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.secondary{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:99px;cursor:pointer;color:var(--text)}.secondary:hover{background:#f7f8fc}.notice{font-size:12px;color:var(--muted);margin-top:12px}
+.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}.card{padding:18px}.label{font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:600}.amount{font-size:clamp(18px,3vw,26px);font-weight:750;letter-spacing:-.5px}.income{color:var(--green)}.expense{color:var(--red)}.balance{color:var(--blue)}
+.layout{display:grid;grid-template-columns:350px minmax(0,1fr);gap:18px;align-items:start}.panel{padding:20px;margin-bottom:18px}.panel h2{font-size:18px;margin:0 0 16px;color:#0f172a;font-weight:700}.field{margin-bottom:13px}label{display:block;font-size:13px;font-weight:650;margin-bottom:6px;color:#334155}input,select,button{font:inherit}input,select{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;color:var(--text)}input:focus,select:focus{outline:2px solid #93c5fd;border-color:var(--blue)}.type-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:15px}.type-switch button{padding:10px;border:1px solid var(--line);border-radius:10px;background:#f1f5f9;color:var(--muted);cursor:pointer;font-weight:700}.type-switch button.active{background:#dbeafe;border-color:#bfdbfe;color:#1d4ed8}
+.primary{border:0;background:var(--blue);color:white;font-weight:750;padding:12px 16px;border-radius:10px;cursor:pointer;width:100%}.primary:hover{background:#1d4ed8}.hint{font-size:12px;color:var(--muted);margin:12px 0 0}
+.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}.toolbar h2{margin:0}.toolbar-filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolbar select,.toolbar input{width:auto;min-width:140px;padding:8px 10px;font-size:13px}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:570px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-size:13px}th{color:var(--muted);font-weight:700;background:#f8fafc}td strong{font-size:14px}.tag{display:inline-block;border-radius:99px;background:#f1f5f9;color:#334155;padding:4px 8px;font-size:12px;font-weight:500}.delete{border:0;background:#fee2e2;color:var(--red);border-radius:8px;padding:7px 9px;cursor:pointer;font-weight:700}.delete:hover{background:#fecaca}.empty{text-align:center;padding:30px 10px;color:var(--muted)}.footer-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.secondary{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:9px;cursor:pointer;color:var(--text);font-weight:600}.secondary:hover{background:#f8fafc}.notice{font-size:12px;color:var(--muted);margin-top:12px}
 
-/* Regras para telemóveis e tablets */
-@media(max-width:850px){
-  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .layout{grid-template-columns:1fr}
-  .panel{padding:16px}
-}
-@media(max-width:480px){
-  .cards{gap:9px}
-  .card{padding:13px}
-  header{padding:20px 16px 24px}
-  #auth-card{padding:24px 20px !important;}
-  #user-greeting-container{flex-direction: column; align-items: flex-start !important; gap: 10px;}
-  #user-greeting-container button{width: 100%;}
-}
+/* Painel de Conselhos Educador Financeiro */
+.advisor-card{background:linear-gradient(135deg, #eff6ff 0%, #f1f5f9 100%);border:1px solid #bfdbfe;border-radius:14px;padding:16px 20px;margin-bottom:20px;display:flex;gap:14px;align-items:flex-start}
+.advisor-icon{font-size:26px;line-height:1}
+.advisor-content h3{margin:0 0 4px;font-size:15px;color:#1e3a8a;font-weight:700}
+.advisor-content p{margin:0;font-size:13px;color:#334155;line-height:1.4}
+
+@media(max-width:850px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}.panel{padding:16px}}
+@media(max-width:480px){.cards{gap:9px}.card{padding:13px}header{padding:20px 16px 24px}#auth-card{padding:24px 20px !important;}#user-greeting-container{flex-direction:column;align-items:flex-start!important;gap:10px;}#user-greeting-container button{width:100%;}.toolbar-filters{width:100%;flex-direction:column;align-items:stretch}.toolbar-filters select,.toolbar-filters input{width:100%}}
 </style>
 </head>
 <body>
@@ -35,7 +31,6 @@ main{max-width:1100px;margin:-14px auto 40px;padding:0 16px}.cards{display:grid;
     <div id="auth-card" style="background: rgba(255, 255, 255, 0.98); padding: 36px 30px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); width: 100%; max-width: 420px; backdrop-filter: blur(12px); margin: auto;">
         <h2 id="auth-title" style="margin-bottom: 22px; color: #0f172a; text-align: center; font-size: clamp(20px, 5vw, 26px); font-weight: 700;">Entrar no Sistema</h2>
         
-        <!-- Campos de Registo (Ocultos no modo Login) -->
         <div id="register-fields" style="display: none;">
             <div style="margin-bottom: 14px;">
                 <label style="display: block; margin-bottom: 5px; font-size: 13px; color: #334155; font-weight: 600;">Nome</label>
@@ -51,7 +46,6 @@ main{max-width:1100px;margin:-14px auto 40px;padding:0 16px}.cards{display:grid;
             </div>
         </div>
 
-        <!-- Campos Comuns (Usuário e Senha) -->
         <div style="margin-bottom: 14px;">
             <label id="lbl-username" style="display: block; margin-bottom: 5px; font-size: 13px; color: #334155; font-weight: 600;">Usuário</label>
             <input type="text" id="auth-username" placeholder="Nome de usuário" style="width: 100%; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
@@ -73,15 +67,26 @@ main{max-width:1100px;margin:-14px auto 40px;padding:0 16px}.cards{display:grid;
     </div>
 </div>
 
+<!-- APLICAÇÃO PRINCIPAL -->
 <div id="app-container" style="display: none;">
 <header><div class="wrap"><h1>Meu Controle Financeiro</h1><p>Organize suas entradas, despesas e saldo em um só lugar.</p></div></header>
 <main>
+  <!-- PAINEL CONSELHEIRO FINANCEIRO -->
+  <div class="advisor-card" id="advisorCard">
+    <div class="advisor-icon" id="advisorIcon">💡</div>
+    <div class="advisor-content">
+      <h3 id="advisorTitle">Análise do Educador Financeiro</h3>
+      <p id="advisorText">A carregar conselhos personalizados...</p>
+    </div>
+  </div>
+
   <section class="cards">
     <div class="card"><div class="label">Saldo do mês</div><div class="amount balance" id="balance">R$ 0,00</div></div>
     <div class="card"><div class="label">Entradas</div><div class="amount income" id="income">R$ 0,00</div></div>
     <div class="card"><div class="label">Despesas</div><div class="amount expense" id="expenses">R$ 0,00</div></div>
     <div class="card"><div class="label">Lançamentos</div><div class="amount" id="count">0</div></div>
   </section>
+
   <div class="layout">
     <section class="panel">
       <h2>Novo lançamento</h2>
@@ -96,10 +101,17 @@ main{max-width:1100px;margin:-14px auto 40px;padding:0 16px}.cards{display:grid;
       </form>
       <p class="hint">Os dados ficam salvos neste navegador, neste computador. Não há conta nem envio para a internet.</p>
     </section>
+
     <section class="panel">
-      <div class="toolbar"><h2>Movimentações</h2><select id="monthFilter" aria-label="Filtrar por mês"></select></div>
+      <div class="toolbar">
+        <h2>Movimentações</h2>
+        <div class="toolbar-filters">
+          <input type="text" id="searchFilter" placeholder="Filtrar (cat, desc...)" aria-label="Pesquisar lançamentos">
+          <select id="monthFilter" aria-label="Filtrar por mês"></select>
+        </div>
+      </div>
       <div class="table-wrap"><table><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th></th></tr></thead><tbody id="entries"></tbody></table></div>
-      <div class="empty" id="empty" hidden>Nenhum lançamento neste mês. Adicione sua primeira entrada ou despesa.</div>
+      <div class="empty" id="empty" hidden>Nenhum lançamento encontrado com este filtro.</div>
       <div class="footer-actions"><button class="secondary" id="exportBtn" type="button">Exportar CSV</button><button class="secondary" id="clearBtn" type="button">Apagar todos os dados</button></div>
       <p class="notice">Dica: registre também gastos pequenos. Eles ajudam a enxergar para onde o dinheiro está indo.</p>
     </section>
@@ -120,11 +132,13 @@ const money = n => new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL
 const today = new Date();
 const localDate = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 $("date").value = localDate(today);
+
 function loadRecords(){try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");return Array.isArray(value)?value:[]}catch{return []}}
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(records))}
 function monthOf(date){return date.slice(0,7)}
 function currentMonth(){return monthOf(localDate(today))}
 function monthLabel(key){const [y,m]=key.split("-").map(Number);return new Date(y,m-1,1).toLocaleDateString("pt-BR",{month:"long",year:"numeric"})}
+
 function updateCategories(){const list=categories[type];$("category").innerHTML=list.map(c=>`<option>${c}</option>`).join("");$("expenseType").classList.toggle("active",type==="expense");$("incomeType").classList.toggle("active",type==="income")}
 function updateMonthOptions(){
   const select=$("monthFilter"), current=select.value;
@@ -133,21 +147,96 @@ function updateMonthOptions(){
   select.innerHTML=sorted.map(m=>`<option value="${m}">${monthLabel(m)}</option>`).join("")+`<option value="all">Todos os meses</option>`;
   if([...select.options].some(o=>o.value===current))select.value=current;else select.value=currentMonth();
 }
+
+function updateAdvisor(ins, outs, balance) {
+  const icon = $("advisorIcon");
+  const title = $("advisorTitle");
+  const text = $("advisorText");
+  const card = $("advisorCard");
+
+  if (ins === 0 && outs === 0) {
+    icon.textContent = "💡";
+    title.textContent = "Comece a sua jornada financeira";
+    text.textContent = "Registe as suas primeiras entradas e despesas. Como dizia Gustavo Cerbasi, o primeiro passo para a riqueza é saber exatamente para onde vai o seu dinheiro.";
+    card.style.background = "linear-gradient(135deg, #eff6ff 0%, #f1f5f9 100%)";
+    card.style.borderColor = "#bfdbfe";
+    return;
+  }
+
+  if (balance > 0) {
+    const savingsRate = ins > 0 ? (balance / ins) * 100 : 0;
+    if (savingsRate >= 20) {
+      icon.textContent = "🏆";
+      title.textContent = "Parabéns! Excelente Saúde Financeira";
+      text.textContent = `Está a poupar ${savingsRate.toFixed(1)}% dos seus ganhos! Segundo os especialistas, investir este excedente em ativos geradores de renda é o caminho certo para a independência financeira.`;
+      card.style.background = "linear-gradient(135deg, #f0fdf4 0%, #f1f5f9 100%)";
+      card.style.borderColor = "#bbf7d0";
+    } else {
+      icon.textContent = "🎯";
+      title.textContent = "No Caminho Certo!";
+      text.textContent = `Tem saldo positivo de ${money(balance)}. Tente direcionar pelo menos 20% para investimentos de curto e longo prazo. Cuidado com gastos invisíveis em assinaturas e pequenos supérfluos.`;
+      card.style.background = "linear-gradient(135deg, #eff6ff 0%, #f1f5f9 100%)";
+      card.style.borderColor = "#bfdbfe";
+    }
+  } else if (balance === 0) {
+    icon.textContent = "⚠️";
+    title.textContent = "Atenção: Orçamento no Limite";
+    text.textContent = "As suas despesas estão a igualar as entradas. O educador Pablo Spyer lembra que o consumo sem planeamento esmaga o património. Reveja gastos em lazer e alimentação fora de casa.";
+    card.style.background = "linear-gradient(135deg, #fefce8 0%, #f1f5f9 100%)";
+    card.style.borderColor = "#fde047";
+  } else {
+    icon.textContent = "🚨";
+    title.textContent = "Alerta Vermelho: Orçamento Negativo";
+    text.textContent = `Está no vermelho em ${money(balance)}. Cortar gastos imediatos e evitar juros de cartão de crédito/rotativo é prioridade absoluta. Foque apenas no essencial até estabilizar as contas.`;
+    card.style.background = "linear-gradient(135deg, #fef2f2 0%, #f1f5f9 100%)";
+    card.style.borderColor = "#fecaca";
+  }
+}
+
 function render(){
   updateMonthOptions();
-  const filter=$("monthFilter").value || currentMonth();
-  const shown=records.filter(r=>filter==="all"||monthOf(r.date)===filter).sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
+  const filterMonth=$("monthFilter").value || currentMonth();
+  const searchTxt=$("searchFilter").value.toLowerCase().trim();
+
+  const shown=records.filter(r=>{
+    const matchesMonth = filterMonth==="all" || monthOf(r.date)===filterMonth;
+    if(!matchesMonth) return false;
+    if(!searchTxt) return true;
+    
+    const formattedDate = new Date(r.date+"T12:00:00").toLocaleDateString("pt-BR");
+    const amountStr = r.amount.toFixed(2).replace(".",",");
+    
+    return r.description.toLowerCase().includes(searchTxt) ||
+           r.category.toLowerCase().includes(searchTxt) ||
+           r.payment.toLowerCase().includes(searchTxt) ||
+           formattedDate.includes(searchTxt) ||
+           amountStr.includes(searchTxt);
+  }).sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
+
   const ins=shown.filter(r=>r.type==="income").reduce((s,r)=>s+r.amount,0);
   const outs=shown.filter(r=>r.type==="expense").reduce((s,r)=>s+r.amount,0);
-  $("income").textContent=money(ins);$("expenses").textContent=money(outs);$("balance").textContent=money(ins-outs);$("count").textContent=shown.length;
-  $("balance").className="amount "+(ins-outs<0?"expense":"balance");
-  $("entries").innerHTML=shown.map(r=>`<tr><td>${new Date(r.date+"T12:00:00").toLocaleDateString("pt-BR")}</td><td><strong>${escapeHtml(r.description)}</strong><br><span style="color:#697386">${escapeHtml(r.payment)}</span></td><td><span class="tag">${escapeHtml(r.category)}</span></td><td class="${r.type==="income"?"income":"expense"}"><strong>${r.type==="income"?"+":"−"} ${money(r.amount)}</strong></td><td><button class="delete" data-delete="${r.id}" aria-label="Excluir ${escapeHtml(r.description)}">Excluir</button></td></tr>`).join("");
+  const currentBalance = ins - outs;
+
+  $("income").textContent=money(ins);
+  $("expenses").textContent=money(outs);
+  $("balance").textContent=money(currentBalance);
+  $("count").textContent=shown.length;
+  $("balance").className="amount "+(currentBalance<0?"expense":"balance");
+
+  $("entries").innerHTML=shown.map(r=>`<tr><td>${new Date(r.date+"T12:00:00").toLocaleDateString("pt-BR")}</td><td><strong>${escapeHtml(r.description)}</strong><br><span style="color:#64748b">${escapeHtml(r.payment)}</span></td><td><span class="tag">${escapeHtml(r.category)}</span></td><td class="${r.type==="income"?"income":"expense"}"><strong>${r.type==="income"?"+":"−"} ${money(r.amount)}</strong></td><td><button class="delete" data-delete="${r.id}" aria-label="Excluir ${escapeHtml(r.description)}">Excluir</button></td></tr>`).join("");
   $("empty").hidden=shown.length>0;
+
+  // Atualiza conselheiro com base no mês filtrado
+  updateAdvisor(ins, outs, currentBalance);
 }
+
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
 $("expenseType").addEventListener("click",()=>{type="expense";updateCategories()});
 $("incomeType").addEventListener("click",()=>{type="income";updateCategories()});
 $("monthFilter").addEventListener("change",render);
+$("searchFilter").addEventListener("input",render);
+
 $("entryForm").addEventListener("submit",e=>{
   e.preventDefault();
   const amount=Number($("amount").value);
@@ -155,20 +244,24 @@ $("entryForm").addEventListener("submit",e=>{
   records.push({id:Date.now()+Math.floor(Math.random()*1000),type,description:$("description").value.trim(),amount:Math.round(amount*100)/100,category:$("category").value,date:$("date").value,payment:$("payment").value});
   save();$("description").value="";$("amount").value="";$("description").focus();render();
 });
+
 $("entries").addEventListener("click",e=>{
   const btn=e.target.closest("[data-delete]");if(!btn)return;
   const r=records.find(x=>x.id===Number(btn.dataset.delete));
   if(r&&confirm(`Excluir o lançamento "${r.description}"?`)){records=records.filter(x=>x.id!==r.id);save();render()}
 });
+
 $("clearBtn").addEventListener("click",()=>{
   if(confirm("Tem certeza? Todos os lançamentos salvos neste navegador serão apagados.")){records=[];save();render()}
 });
+
 $("exportBtn").addEventListener("click",()=>{
   const rows=[["Data","Tipo","Descrição","Categoria","Forma de pagamento","Valor"],...records.map(r=>[r.date,r.type==="income"?"Entrada":"Despesa",r.description,r.category,r.payment,r.amount.toFixed(2).replace(".",",")])];
   const csv="\uFEFF"+rows.map(row=>row.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(";")).join("\r\n");
   const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");
   a.href=url;a.download="meu-controle-financeiro.csv";a.click();URL.revokeObjectURL(url);
 });
+
 updateCategories();render();
 </script>
 
@@ -237,16 +330,20 @@ updateCategories();render();
         }
     }
 
-    window.togglePasswordVisibility = function() {
+    function togglePasswordVisibility() {
         const passwordInput = document.getElementById('auth-password');
+        const toggleBtn = document.getElementById('toggle-password-btn');
+        
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text';
+            toggleBtn.innerText = '👓';
         } else {
             passwordInput.type = 'password';
+            toggleBtn.innerText = '🕶️';
         }
-    };
+    }
 
-    window.toggleAuthMode = function() {
+    function toggleAuthMode() {
         let users = JSON.parse(localStorage.getItem('finance_users') || '[]');
         if (users.length > 0) return;
 
@@ -273,9 +370,9 @@ updateCategories();render();
             lblPassword.innerText = "Palavra-passe (Mín. 8 caracteres, maiúsculas, minúsculas e números)";
             toggleText.innerHTML = 'Já tem uma conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #2563eb; text-decoration: none; font-weight: bold;">Entrar</a>';
         }
-    };
+    }
 
-    window.handleAuth = function() {
+    function handleAuth() {
         const username = document.getElementById('auth-username').value.trim();
         const password = document.getElementById('auth-password').value.trim();
 
@@ -336,9 +433,9 @@ updateCategories();render();
             
             location.reload(); 
         }
-    };
+    }
 
-    window.handleLogout = function() {
+    function handleLogout() {
         localStorage.removeItem('finance_logged_user');
         clearTimeout(inactivityTimer);
         
@@ -351,6 +448,7 @@ updateCategories();render();
         const registerFields = document.getElementById('register-fields');
         const lblUsername = document.getElementById('lbl-username');
         const lblPassword = document.getElementById('lbl-password');
+        const toggleBtn = document.getElementById('toggle-password-btn');
 
         if (title) title.innerText = "Entrar no Sistema";
         if (btn) btn.innerText = "Entrar";
@@ -361,7 +459,8 @@ updateCategories();render();
         document.getElementById('auth-username').value = '';
         document.getElementById('auth-password').value = '';
         document.getElementById('auth-password').type = 'password';
-    };
+        if (toggleBtn) toggleBtn.innerText = '🕶️';
+    }
 </script>
 </body>
 </html>
