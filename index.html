@@ -146,10 +146,22 @@ const categories = {
   income: ["Salário","Vale/Benefícios","Freelance","Vendas","Rendimentos","Presente","Outros"]
 };
 
-// Lista completa unificada de todas as categorias
-const allCategoriesList = [
-  ...categories.expense,
-  ...categories.income.filter(c => !categories.expense.includes(c))
+// Apenas as categorias exatas solicitadas para o filtro
+const exactFilterCategories = [
+  "Moradia",
+  "Alimentação",
+  "Mercado",
+  "Transporte",
+  "Combustível",
+  "Carro",
+  "Saúde",
+  "Academia",
+  "Lazer",
+  "Assinaturas",
+  "Contas",
+  "Parcelas/Dívidas",
+  "Educação",
+  "Outros"
 ];
 
 const allPaymentsList = ["Pix", "Débito", "Crédito", "Dinheiro", "Transferência", "Outro"];
@@ -185,7 +197,7 @@ function handleFilterTypeChange() {
   if (filterType === "all") {
     container.innerHTML = "";
   } else if (filterType === "category") {
-    container.innerHTML = `<select id="subFilterValue"><option value="all">Todas as Categorias</option>${allCategoriesList.map(c=>`<option value="${c}">${c}</option>`).join("")}</select>`;
+    container.innerHTML = `<select id="subFilterValue"><option value="all">Todas as Categorias</option>${exactFilterCategories.map(c=>`<option value="${c}">${c}</option>`).join("")}</select>`;
     $("subFilterValue").addEventListener("change", render);
   } else if (filterType === "payment") {
     container.innerHTML = `<select id="subFilterValue"><option value="all">Todas as Formas</option>${allPaymentsList.map(p=>`<option value="${p}">${p}</option>`).join("")}</select>`;
