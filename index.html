@@ -28,7 +28,7 @@ main{max-width:1100px;margin:-14px auto 40px;padding:0 16px}.cards{display:grid;
 </style>
 </head>
 <body>
-  <!-- ECRÃ DE AUTENTICAÇÃO -->
+  <!-- TELA DE AUTENTICAÇÃO -->
 <div id="auth-container" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 16px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position: fixed; top: 0; left: 0; width: 100%; z-index: 9999; overflow-y: auto;">
     <div id="auth-card" style="background: rgba(255, 255, 255, 0.98); padding: 36px 30px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); width: 100%; max-width: 420px; backdrop-filter: blur(12px); margin: auto;">
         <h2 id="auth-title" style="margin-bottom: 22px; color: #0f172a; text-align: center; font-size: clamp(20px, 5vw, 26px); font-weight: 700;">Entrar no Sistema</h2>
@@ -68,4 +68,166 @@ main{max-width:1100px;margin:-14px auto 40px;padding:0 16px}.cards{display:grid;
 
             <div style="margin-bottom: 14px;">
                 <label id="lbl-username" style="display: block; margin-bottom: 5px; font-size: 13px; color: #334155; font-weight: 600;">Usuário</label>
-                <input type="text" id="auth-username" placeholder="Nome de usuário" style="width:
+                <input type="text" id="auth-username" placeholder="Nome de usuário" style="width: 100%; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+            </div>
+
+            <div style="margin-bottom: 22px;">
+                <label id="lbl-password" style="display: block; margin-bottom: 5px; font-size: 13px; color: #334155; font-weight: 600;">Senha</label>
+                <div style="position: relative; display: flex; align-items: center;">
+                    <input type="password" id="auth-password" placeholder="********" style="width: 100%; padding: 11px 45px 11px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                    <button type="button" id="toggle-password-btn" onclick="togglePasswordVisibility()" style="position: absolute; right: 10px; background: transparent; border: none; cursor: pointer; font-size: 18px; padding: 4px; line-height: 1;" title="Mostrar/Ocultar senha">🕶️</button>
+                </div>
+            </div>
+
+            <button id="auth-btn" onclick="handleAuth()" style="width: 100%; padding: 13px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s;">Entrar</button>
+            
+            <p id="auth-toggle-text" style="text-align: center; font-size: 14px; color: #475569; margin-top: 18px;">
+                Ainda não tem conta? <a href="#" onclick="toggleAuthMode(); return false;" style="color: #2563eb; text-decoration: none; font-weight: bold;">Criar conta</a>
+            </p>
+
+            <p style="text-align: center; font-size: 13px; color: #64748b; margin-top: 12px;">
+                <a href="#" onclick="showChangePassMode(); return false;" style="color: #2563eb; text-decoration: none; font-weight: 600;">Esqueci a senha</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- APLICAÇÃO PRINCIPAL -->
+<div id="app-container" style="display: none;">
+<header>
+  <div class="wrap">
+    <h1 id="main-header-title">Aqui está o seu controle financeiro.</h1>
+    <p>Organize suas entradas, despesas e saldo em um só lugar.</p>
+  </div>
+</header>
+<main>
+  <!-- PAINEL CONSELHEIRO FINANCEIRO -->
+  <div class="advisor-card" id="advisorCard">
+    <div class="advisor-icon" id="advisorIcon">💡</div>
+    <div class="advisor-content">
+      <h3 id="advisorTitle">Análise do Educador Financeiro</h3>
+      <p id="advisorText">A carregar conselhos personalizados...</p>
+    </div>
+  </div>
+
+  <section class="cards">
+    <div class="card"><div class="label">Saldo do mês</div><div class="amount balance" id="balance">R$ 0,00</div></div>
+    <div class="card"><div class="label">Entradas</div><div class="amount income" id="income">R$ 0,00</div></div>
+    <div class="card"><div class="label">Despesas</div><div class="amount expense" id="expenses">R$ 0,00</div></div>
+    <div class="card"><div class="label">Lançamentos</div><div class="amount" id="count">0</div></div>
+  </section>
+
+  <div class="layout">
+    <section class="panel">
+      <h2>Novo lançamento</h2>
+      <div class="type-switch"><button type="button" class="active" id="expenseType">− Despesa</button><button type="button" id="incomeType">＋ Entrada</button></div>
+      <form id="entryForm">
+        <div class="field"><label for="description">Descrição</label><input id="description" required maxlength="80" placeholder="Ex.: combustível, salário, mercado"></div>
+        <div class="field"><label for="amount">Valor (R$)</label><input id="amount" required type="number" min="0.01" step="0.01" placeholder="0,00"></div>
+        <div class="field"><label for="category">Categoria</label><select id="category"></select></div>
+        <div class="field"><label for="date">Data</label><input id="date" required type="date"></div>
+        <div class="field"><label for="payment">Forma de pagamento</label><select id="payment"><option>Pix</option><option>Débito</option><option>Crédito</option><option>Dinheiro</option><option>Transferência</option><option>Outro</option></select></div>
+        <button class="primary" type="submit">Adicionar lançamento</button>
+      </form>
+      <p class="hint">Os dados ficam salvos neste navegador, neste computador. Não há conta nem envio para a internet.</p>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <h2>Movimentações</h2>
+        <div class="toolbar-filters">
+          <!-- Filtro Principal -->
+          <select id="filterTypeSelect" aria-label="Tipo de Filtro">
+            <option value="all">Todas as Opções</option>
+            <option value="description">Descrição</option>
+            <option value="amount">Valor</option>
+            <option value="category">Categoria</option>
+            <option value="date">Data</option>
+            <option value="payment">Forma de pagamento</option>
+          </select>
+
+          <!-- Sub-filtro Dinâmico -->
+          <div id="subFilterContainer" style="display: inline-block;"></div>
+
+          <!-- Filtro por Mês -->
+          <select id="monthFilter" aria-label="Filtrar por mês"></select>
+        </div>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th></th></tr></thead><tbody id="entries"></tbody></table></div>
+      <div class="empty" id="empty" hidden>Nenhum lançamento encontrado com este filtro.</div>
+      <div class="footer-actions"><button class="secondary" id="exportBtn" type="button">Exportar CSV</button><button class="secondary" id="clearBtn" type="button">Apagar todos os dados</button></div>
+      <p class="notice">Dica: registre também gastos pequenos. Eles ajudam a enxergar para onde o dinheiro está indo.</p>
+    </section>
+  </div>
+</main>
+</div>
+
+<script>
+const STORAGE_KEY = "meuControleFinanceiro.v1";
+const categories = {
+  expense: ["Moradia","Alimentação","Mercado","Transporte","Combustível","Carro","Saúde","Academia","Lazer","Assinaturas","Contas","Parcelas/Dívidas","Educação","Outros"],
+  income: ["Salário","Vale/Benefícios","Freelance","Vendas","Rendimentos","Presente","Outros"]
+};
+
+const exactFilterCategories = [
+  "Moradia",
+  "Alimentação",
+  "Mercado",
+  "Transporte",
+  "Combustível",
+  "Carro",
+  "Saúde",
+  "Academia",
+  "Lazer",
+  "Assinaturas",
+  "Contas",
+  "Parcelas/Dívidas",
+  "Educação",
+  "Outros"
+];
+
+const allPaymentsList = ["Pix", "Débito", "Crédito", "Dinheiro", "Transferência", "Outro"];
+
+let type = "expense";
+let records = loadRecords();
+const $ = id => document.getElementById(id);
+const money = n => new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(n);
+const today = new Date();
+const localDate = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+$("date").value = localDate(today);
+
+function loadRecords(){try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");return Array.isArray(value)?value:[]}catch{return []}}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(records))}
+function monthOf(date){return date.slice(0,7)}
+function currentMonth(){return monthOf(localDate(today))}
+function monthLabel(key){const [y,m]=key.split("-").map(Number);return new Date(y,m-1,1).toLocaleDateString("pt-BR",{month:"long",year:"numeric"})}
+
+function updateCategories(){const list=categories[type];$("category").innerHTML=list.map(c=>`<option>${c}</option>`).join("");$("expenseType").classList.toggle("active",type==="expense");$("incomeType").classList.toggle("active",type==="income")}
+
+function updateMonthOptions(){
+  const select=$("monthFilter"), current=select.value;
+  const months=new Set([currentMonth(),...records.map(r=>monthOf(r.date))]);
+  const sorted=[...months].sort().reverse();
+  select.innerHTML=sorted.map(m=>`<option value="${m}">${monthLabel(m)}</option>`).join("")+`<option value="all">Todos os meses</option>`;
+  if([...select.options].some(o=>o.value===current))select.value=current;else select.value=currentMonth();
+}
+
+function handleFilterTypeChange() {
+  const filterType = $("filterTypeSelect").value;
+  const container = $("subFilterContainer");
+
+  if (filterType === "all") {
+    container.innerHTML = "";
+  } else if (filterType === "category") {
+    container.innerHTML = `<select id="subFilterValue"><option value="all">Todas as Categorias</option>${exactFilterCategories.map(c=>`<option value="${c}">${c}</option>`).join("")}</select>`;
+    $("subFilterValue").addEventListener("change", render);
+  } else if (filterType === "payment") {
+    container.innerHTML = `<select id="subFilterValue"><option value="all">Todas as Formas</option>${allPaymentsList.map(p=>`<option value="${p}">${p}</option>`).join("")}</select>`;
+    $("subFilterValue").addEventListener("change", render);
+  } else if (filterType === "description") {
+    container.innerHTML = `<input type="text" id="subFilterValue" placeholder="Digite a descrição...">`;
+    $("subFilterValue").addEventListener("input", render);
+  } else if (filterType === "amount") {
+    container.innerHTML = `<input type="number" id="subFilterValue" placeholder="Valor exato ou min (R$)" step="0.01">`;
+    $("subFilterValue").addEventListener("input", render);
+  } else if (filterType === "date") {
